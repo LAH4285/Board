@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<body>
+<h1>게시판</h1>
+<a href="/post">새 글 작성</a>
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>작성 시간</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+        <td th:text="${post.title}">제목</td>
+        <td th:text="${post.createdAt}">작성 시간</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
