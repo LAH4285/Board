@@ -1,7 +1,7 @@
 package com.example.board.core.utils;
 
-import com.example.login_test.core.error.exception.Exception401;
-import com.example.login_test.core.error.exception.Exception403;
+import com.example.board.core.error.exception.Exception401;
+import com.example.board.core.error.exception.Exception403;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.http.HttpServletResponse;

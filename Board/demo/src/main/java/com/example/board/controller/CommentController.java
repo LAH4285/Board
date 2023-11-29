@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,6 +31,12 @@ public class CommentController {
         } else {
             return new ResponseEntity<>("게시글이 없음.", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        commentService.delete(id);
+        return "redirect:/board/paging";
     }
 }
 

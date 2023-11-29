@@ -1,7 +1,7 @@
 package com.example.board.core.error;
 
-import com.example.login_test.core.error.exception.*;
-import com.example.login_test.core.utils.ApiUtils;
+import com.example.board.core.error.exception.*;
+import com.example.board.core.utils.ApiUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

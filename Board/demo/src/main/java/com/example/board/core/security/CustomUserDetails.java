@@ -1,6 +1,6 @@
 package com.example.board.core.security;
 
-import com.example.login_test.user.User;
+import com.example.board.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

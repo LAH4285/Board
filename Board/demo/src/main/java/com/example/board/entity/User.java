@@ -26,6 +26,9 @@ public class User{
     @Convert(converter = StringArrayConverter.class)
     private List<String> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Board> board =  new ArrayList<>();
+
     @Builder
     public User(int id, String email, String password, String username, String phoneNumber, List<String> roles) {
         this.id = id;

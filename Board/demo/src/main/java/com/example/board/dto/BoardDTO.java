@@ -25,6 +25,7 @@ public class BoardDTO {
     private LocalDateTime createTime;
     // ** 수정 시간
     private LocalDateTime updateTime;
+
     // ** 엔티티
     public Board toEntity() {
         return Board.builder()
@@ -41,6 +42,7 @@ public class BoardDTO {
                 board.getTitle(),
                 board.getContents(),
                 board.getCreateTime(),
-                board.getUpdateTime() );
+                board.getUpdateTime()
+          );
     }
 }

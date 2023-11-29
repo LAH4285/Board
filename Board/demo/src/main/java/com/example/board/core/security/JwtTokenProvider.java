@@ -6,8 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.login_test.user.StringArrayConverter;
-import com.example.login_test.user.User;
+import com.example.board.core.StringArrayConverter;
+import com.example.board.entity.User;
 
 import java.util.Date;
 

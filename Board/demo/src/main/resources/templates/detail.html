@@ -114,17 +114,31 @@
             <td th:text="${comment.id}"></td>
             <td th:text="${comment.writer}"></td>
             <td th:text="${comment.contents}"></td>
+            <td><button onclick="commentDelete(${comment.id})">삭제</button></td>
         </tr>
     </table>
 </div>
 
 <script th:inline="javascript">
+    const commentDelete = (id) => {
+    $.ajax({
+        type: "delete",
+        url: "/comment/delete/" + id,
+        success: function (res) {
+            console.log("삭제 성공", res);
+        },
+        error: function (err) {
+            console.log("삭제 실패", err);
+        }
+    });
+};
     const commentWrite = () => {
         const jsWriter = document.getElementById("writer").value;
         const jsContents = document.getElementById("contents").value;
         console.log("작성자: ", jsWriter);
         console.log("내용: ", jsContents);
         const jsId = [[${board.id}]];
+
         $.ajax({
             type: "post",
             url: "/comment/save",
@@ -144,6 +158,7 @@
                     output += "<td>" + res[i].id + "</td>";
                     output += "<td>" + res[i].writer + "</td>";
                     output += "<td>" + res[i].contents + "</td>";
+                    output += "<td><button onclick='commentDelete(" + res[i].id + ")'>삭제</button></td>";
                     output += "</tr>";
                 }
 

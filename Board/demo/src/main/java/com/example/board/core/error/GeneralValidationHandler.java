@@ -1,6 +1,6 @@
 package com.example.board.core.error;
 
-import com.example.login_test.core.error.exception.Exception400;
+import com.example.board.core.error.exception.Exception400;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

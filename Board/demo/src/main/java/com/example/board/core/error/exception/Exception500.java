@@ -1,7 +1,7 @@
 package com.example.board.core.error.exception;
 
 
-import com.example.login_test.core.utils.ApiUtils;
+import com.example.board.core.utils.ApiUtils;
 import org.springframework.http.HttpStatus;
 
 public class Exception500 extends RuntimeException {
