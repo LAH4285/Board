@@ -21,7 +21,7 @@ public class Board {
     private Long id;
     
     // ** 작성자 이름
-    @Column(length = 50)
+    @Column(length = 50, unique = true)
     private String userName;
     
     // ** 게시물 제목

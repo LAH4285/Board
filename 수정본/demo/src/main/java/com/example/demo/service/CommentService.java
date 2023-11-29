@@ -43,11 +43,29 @@ public class CommentService {
         Board boardEntity = boardRepository.findById(boardId).get();
         java.util.List<Comment> commentEntityList = commentRepository.findAllByBoardOrderByIdDesc(boardEntity);
         /* EntityList -> DTOList */
-        List<com.example.demo.dto.CommentDTO> commentDTOList = new ArrayList<>();
+        List<CommentDTO> commentDTOList = new ArrayList<>();
         for (Comment commentEntity: commentEntityList) {
-            com.example.demo.dto.CommentDTO commentDTO = com.example.demo.dto.CommentDTO.toCommentDTO(commentEntity, boardId);
+            CommentDTO commentDTO = CommentDTO.toCommentDTO(commentEntity, boardId);
             commentDTOList.add(commentDTO);
         }
         return commentDTOList;
+    }
+    public Optional<Comment> findById(Long id) {
+        return commentRepository.findById(id);
+    }
+    @Transactional
+    public void delete(Long id){
+        commentRepository.deleteById(id);
+    }
+    @Transactional
+    public void update(CommentDTO commentDTO) {
+        Optional<Comment> commentOptional = commentRepository.findById(commentDTO.getId());
+
+        //if(boardOptional.isPresent()) ... 예외처리 생략
+        Comment comment = commentOptional.get();
+
+        comment.updateFromDTO(commentDTO);
+
+        commentRepository.save(comment);
     }
 }

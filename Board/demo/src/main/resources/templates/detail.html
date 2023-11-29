@@ -114,7 +114,8 @@
             <td th:text="${comment.id}"></td>
             <td th:text="${comment.writer}"></td>
             <td th:text="${comment.contents}"></td>
-            <td><button onclick="commentDelete(${comment.id})">삭제</button></td>
+            <td><button class="btn btn-danger" onclick="commentDelete(${comment.id})">삭제</button></td>
+
         </tr>
     </table>
 </div>

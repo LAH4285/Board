@@ -42,9 +42,35 @@
             background-color: #3367d6;
         }
     </style>
+    <script>
+        <script>
+    function checkDuplicate() {
+        var userName = document.getElementById('userName').value;
+
+        // AJAX로 서버에 중복 확인 요청
+        $.ajax({
+            type: 'GET',
+            url: '/check-duplicate/' + userName,
+            success: function(response) {
+                if (response === true) {
+                    alert('중복된 아이디입니다.');
+                } else {
+                    alert('사용 가능한 아이디입니다.');
+                }
+            },
+            error: function(error) {
+                console.error('서버 오류:', error);
+            }
+        });
+    }
+    </script>
+    </script>
 </head>
 <body>
 <form action="/board/save" method="post" enctype="multipart/form-data">
+    <label for="userName">userName:</label>
+    <input type="text" name="userName" id="userName"><br>
+
     <label for="title">Title:</label>
     <input type="text" name="title" id="title"><br>
 

@@ -1,5 +1,6 @@
 package com.example.board.service;
 
+import com.example.board.dto.BoardDTO;
 import com.example.board.dto.CommentDTO;
 import com.example.board.entity.Board;
 import com.example.board.entity.Comment;
@@ -53,5 +54,17 @@ public class CommentService {
 
     public void delete(Long id){
         commentRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void update(CommentDTO commentDTO) {
+        Optional<Comment> commentOptional = commentRepository.findById(commentDTO.getId());
+
+        //if(boardOptional.isPresent()) ... 예외처리 생략
+        Comment comment = commentOptional.get();
+
+        comment.updateFromDTO(commentDTO);
+
+        commentRepository.save(comment);
     }
 }

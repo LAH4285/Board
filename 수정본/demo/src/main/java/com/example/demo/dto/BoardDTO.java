@@ -19,10 +19,15 @@ public class BoardDTO {
     private Long id;
 
     // ** 제목
+    @NonNull
     private String title;
 
     // ** 내용
+    @NonNull
     private String contents;
+
+    @NonNull
+    private String userName;
 
     private LocalDateTime createTime;
 
@@ -32,6 +37,7 @@ public class BoardDTO {
         return Board.builder()
                 .title(title)
                 .contents(contents)
+                .userName(userName)
                 .createTime(createTime)
                 .updateTime(updateTime)
                 .build();
@@ -42,6 +48,7 @@ public class BoardDTO {
                 board.getId(),
                 board.getTitle(),
                 board.getContents(),
+                board.getUserName(),
                 board.getCreateTime(),
                 board.getUpdateTime() );
     }
