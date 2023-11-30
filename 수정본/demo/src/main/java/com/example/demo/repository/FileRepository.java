@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface FileRepository extends JpaRepository<BoardFile, Long> {
     Optional<BoardFile> findByFileName(BoardFile boardFile);
     List<BoardFile> findByBoard(Board board);
+    List<BoardFile> findByBoardId(Long boardId);
 }

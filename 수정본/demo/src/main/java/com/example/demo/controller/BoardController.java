@@ -5,6 +5,7 @@ import com.example.demo.entity.Board;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.service.BoardService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -15,11 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
@@ -51,7 +55,10 @@ public class BoardController {
     public String updateForm(@PathVariable Long id, Model model) {
 
         BoardDTO boardDTO = boardService.findById(id);
+        List<BoardFile> existingFiles = boardService.findByBoardId(id); // 기존 파일 목록 조회
         model.addAttribute("board", boardDTO);
+        model.addAttribute("existingFiles", existingFiles);
+
         return "update";
     }
     // CRUD update / "/board/"로 리다이렉트
@@ -66,9 +73,11 @@ public class BoardController {
                          @PageableDefault(page = 1) Pageable pageable){
 
         BoardDTO dto = boardService.findById(id);
+        List<BoardFile> files = boardService.findByBoardId(id);
 
         model.addAttribute("board", dto);
         model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("files", files != null ? files : Collections.emptyList());
 
         return "detail";
     }
@@ -87,6 +96,14 @@ public class BoardController {
     public String delete(@PathVariable Long id) {
         System.out.println(id);
         boardService.delete(id);
+        return "redirect:/board/paging";
+    }
+
+    @DeleteMapping("/deleteByBoardFile/{id}")
+    public String deleteByBoardFile(@PathVariable Long id) {
+        System.out.println(id);
+        boardService.deleteByBoardFile(id);
+
         return "redirect:/board/paging";
     }
 }

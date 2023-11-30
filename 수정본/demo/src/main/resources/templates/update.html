@@ -41,6 +41,14 @@
     <input type="text" name="title" id="title"> <br>
     <label for="contents">Contents:</label>
     <textarea name="contents" id="contents" cols="30" rows="10"></textarea> <br>
+    <label>기존 파일:</label>
+    <ul>
+        <li th:each="file : ${existingFiles}">
+            <span th:text="${file.fileName}"></span>
+            <button class="delete-btn" th:onclick="'/board/deleteByBoardFile/' + ${file.id}">삭제</button>
+        </li>
+    </ul>
+
     <label for="files">파일 선택:</label>
     <input type="file" id="files" name="files" multiple>
     <br>

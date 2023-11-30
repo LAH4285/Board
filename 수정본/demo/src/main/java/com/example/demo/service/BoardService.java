@@ -31,7 +31,7 @@ public class BoardService {
 
     // ** 학원에서는 /G/
     // ** 집에서는 본인 PC 이름.
-    private final String filePath = "C:/Users/G/Desktop/green/Board Files/";
+    private final String filePath = "C:/Users/G/Desktop/Intellij/게시판 리뷰/Board Files/";
 
 
     // ** paging 을 함수
@@ -61,6 +61,11 @@ public class BoardService {
         //if(boardRepository.findById(id).isPresent()) ... 예외처리 생략
         Board board = boardRepository.findById(id).get();
         return BoardDTO.toBoardDTO(board);
+    }
+
+    public List<BoardFile> findByBoardId(Long boardId) {
+        List<BoardFile> boardFiles = fileRepository.findByBoardId(boardId);
+        return boardFiles;
     }
 
     @Transactional
@@ -131,7 +136,7 @@ public class BoardService {
 
             List<BoardFile> existingFiles = fileRepository.findByBoard(board);
             for (BoardFile file : existingFiles) {
-                fileRepository.delete(file);
+                //fileRepository.delete(file);
 
             }
 
@@ -147,31 +152,39 @@ public class BoardService {
                 String originalFileName = file.getOriginalFilename();
 
                 // ** 확장자 추출
-                String formatType = originalFileName.substring(
-                        originalFileName.lastIndexOf("."));
+                if (originalFileName != null && !originalFileName.isEmpty()) {
+                    // 확장자 추출
+                    String formatType = originalFileName.substring(originalFileName.lastIndexOf("."));
 
-                // ** UUID 생성
-                String uuid = UUID.randomUUID().toString();
 
-                // ** 경로 지정
-                String path = filePath + uuid + originalFileName;
+                    // ** UUID 생성
+                    String uuid = UUID.randomUUID().toString();
 
-                // ** 경로에 파일을 저장.  DB 아님
-                file.transferTo(new File(path));
+                    // ** 경로 지정
+                    String path = filePath + uuid + originalFileName;
 
-                BoardFile boardFile = BoardFile.builder()
-                        .filePath(filePath)
-                        .fileName(originalFileName)
-                        .uuid(uuid)
-                        .fileType(formatType)
-                        .fileSize(file.getSize())
-                        .board(board)
-                        .build();
+                    // ** 경로에 파일을 저장.  DB 아님
+                    file.transferTo(new File(path));
 
-                fileRepository.save(boardFile);
+                    BoardFile boardFile = BoardFile.builder()
+                            .filePath(filePath)
+                            .fileName(originalFileName)
+                            .uuid(uuid)
+                            .fileType(formatType)
+                            .fileSize(file.getSize())
+                            .board(board)
+                            .build();
+
+                    fileRepository.save(boardFile);
+                }
+
             }
 
             boardRepository.save(board);
         }
+    }
+    @Transactional
+    public void deleteByBoardFile(Long id) {
+        fileRepository.deleteById(id);
     }
 }
