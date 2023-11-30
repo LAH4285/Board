@@ -61,7 +61,6 @@ public class CommentService {
     public void update(CommentDTO commentDTO) {
         Optional<Comment> commentOptional = commentRepository.findById(commentDTO.getId());
 
-        //if(boardOptional.isPresent()) ... 예외처리 생략
         Comment comment = commentOptional.get();
 
         comment.updateFromDTO(commentDTO);
