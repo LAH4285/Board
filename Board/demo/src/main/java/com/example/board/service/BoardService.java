@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,18 +30,14 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final FileRepository fileRepository;
 
-    // html에서 사용하기엔 위험요소가 큼
     private final String filePath = "C:/Users/G/Desktop/Intellij/게시판 리뷰/Board Files/";
 
     // ** paging 을 함수
     public Page<BoardDTO> paging(Pageable pageable) {
-
         // ** 페이지 시작 번호 셋팅
         int page = pageable.getPageNumber() - 1;
-        
         // ** 페이지에 포함될 게시물 개수
         int size = 5;
-
         // ** 전체 게시물을 불러온다.
         Page<Board> boards = boardRepository.findAll(
                 PageRequest.of(page, size));
@@ -49,6 +46,7 @@ public class BoardService {
                 board.getId(),
                 board.getTitle(),
                 board.getContents(),
+                board.getUserName(),
                 board.getCreateTime(),
                 board.getUpdateTime() ));
     }
@@ -60,24 +58,24 @@ public class BoardService {
         return BoardDTO.toBoardDTO(board);
     }
 
+    public List<BoardFile> findByBoardId(Long boardId) {
+        List<BoardFile> boardFiles = fileRepository.findByBoardId(boardId);
+        return boardFiles;
+    }
+
     @Transactional
     public void save(BoardDTO dto, MultipartFile[] files) throws IOException {
 
-        Path uploadPath = Paths.get(filePath);
-
-        // ** 만약 경로가 없다면... 경로 생성.
-        if(!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        // ** 게시글 DB에 저장 후 pk을 받아옴.
-        Long id = boardRepository.save(dto.toEntity()).getId();
-        Board board = boardRepository.findById(id).get();
-
-        // ** 파일이 없을 때 실행하면 안됨. 예외처리 작성 필수 !!!!!
-
-        // ** 파일 정보 저장.
+        try {
+            // ** 파일 정보 저장.
             for (MultipartFile file : files) {
+
+                Path uploadPath = Paths.get(filePath);
+
+                // ** 만약 경로가 없다면... 경로 생성.
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
 
                 // ** 파일명 추출
                 String originalFileName = file.getOriginalFilename();
@@ -85,14 +83,19 @@ public class BoardService {
                 // ** 확장자 추출
                 String formatType = originalFileName.substring(
                         originalFileName.lastIndexOf("."));
+
                 // ** UUID 생성
                 String uuid = UUID.randomUUID().toString();
+
                 // ** 경로 지정
-                // ** C:/Users/G/Desktop/green/Board Files/{uuid + originalFileName}
                 String path = filePath + uuid + originalFileName;
 
                 // ** 경로에 파일을 저장.  DB 아님
                 file.transferTo(new File(path));
+
+                // ** 게시글 DB에 저장 후 pk을 받아옴.
+                Long id = boardRepository.save(dto.toEntity()).getId();
+                Board board = boardRepository.findById(id).get();
 
                 BoardFile boardFile = BoardFile.builder()
                         .filePath(filePath)
@@ -105,8 +108,11 @@ public class BoardService {
 
                 fileRepository.save(boardFile);
             }
-
-
+        }
+        catch (Exception e){
+            Long id = boardRepository.save(dto.toEntity()).getId();
+            Board board = boardRepository.findById(id).get();
+        }
     }
 
     @Transactional
@@ -115,14 +121,60 @@ public class BoardService {
     }
 
     @Transactional
-    public void update(BoardDTO boardDTO) {
+    public void update(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
         Optional<Board> boardOptional = boardRepository.findById(boardDTO.getId());
 
-        //if(boardOptional.isPresent()) ... 예외처리 생략
-        Board board = boardOptional.get();
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
 
-        board.updateFromDTO(boardDTO);
+            board.updateFromDTO(boardDTO);
 
-        boardRepository.save(board);
+            List<BoardFile> existingFiles = fileRepository.findByBoard(board);
+              // 2. 새로운 파일 업로드
+            for (MultipartFile file : files) {
+                Path uploadPath = Paths.get(filePath);
+
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                // ** 파일명 추출
+                String originalFileName = file.getOriginalFilename();
+
+                // ** 확장자 추출
+                if (originalFileName != null && !originalFileName.isEmpty()) {
+                    // 확장자 추출
+                    String formatType = originalFileName.substring(originalFileName.lastIndexOf("."));
+
+
+                    // ** UUID 생성
+                    String uuid = UUID.randomUUID().toString();
+
+                    // ** 경로 지정
+                    String path = filePath + uuid + originalFileName;
+
+                    // ** 경로에 파일을 저장.  DB 아님
+                    file.transferTo(new File(path));
+
+                    BoardFile boardFile = BoardFile.builder()
+                            .filePath(filePath)
+                            .fileName(originalFileName)
+                            .uuid(uuid)
+                            .fileType(formatType)
+                            .fileSize(file.getSize())
+                            .board(board)
+                            .build();
+
+                    fileRepository.save(boardFile);
+                }
+
+            }
+
+            boardRepository.save(board);
+        }
+    }
+    @Transactional
+    public void deleteByBoardFile(Long id) {
+        fileRepository.deleteAll();
     }
 }

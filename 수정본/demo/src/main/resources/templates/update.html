@@ -33,6 +33,15 @@
             cursor: pointer;
         }
     </style>
+    <script>
+        function deleteAndRefresh(id) {
+            fetch('/board/deleteByBoardFile/' + id, {
+                method: 'DELETE'
+            }).then(function() {
+                location.reload(); // 현재 페이지를 새로고침
+            });
+        }
+    </script>
 </head>
 <body>
 <form action="/board/update" method="post" enctype="multipart/form-data">
@@ -45,7 +54,7 @@
     <ul>
         <li th:each="file : ${existingFiles}">
             <span th:text="${file.fileName}"></span>
-            <button class="delete-btn" th:onclick="'/board/deleteByBoardFile/' + ${file.id}">삭제</button>
+            <button class="delete-btn" onclick="deleteAndRefresh(${file.id})">삭제</button>
         </li>
     </ul>
 

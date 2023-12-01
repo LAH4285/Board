@@ -14,14 +14,12 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(length = 100, nullable = false, unique = true)
+    @Column(length = 50, nullable = false, unique = true)
     private String email;
-    @Column(length = 256, nullable = false)
+    @Column(length = 50, nullable = false)
     private String password;
-    @Column(length = 45, nullable = false)
+    @Column(length = 20, nullable = false)
     private String username;
-    @Column(length = 11, nullable = false)
-    private String phoneNumber;
     @Column(length = 30)
     @Convert(converter = StringArrayConverter.class)
     private List<String> roles = new ArrayList<>();
@@ -35,7 +33,6 @@ public class User{
         this.email = email;
         this.password = password;
         this.username = username;
-        this.phoneNumber = phoneNumber;
         this.roles = roles;
     }
     public void output(){

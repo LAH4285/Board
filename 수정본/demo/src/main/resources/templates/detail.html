@@ -85,7 +85,8 @@
     <ul>
         <li th:each="file : ${files}">
             <!-- 다운로드 링크 추가 -->
-            <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}">Download</a>
+            <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}"
+                th:text="${file.fileName} + ' Download'">Download</a>
         </li>
     </ul>
 </div>
@@ -130,7 +131,7 @@
     </table>
 </div>
 
-
+<body>
 <script th:inline="javascript">
     const commentDelete = (id) => {
     $.ajax({

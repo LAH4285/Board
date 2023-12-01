@@ -16,21 +16,25 @@ public class BoardDTO {
     private Long id;
 
     // ** 제목
+    @NonNull
     private String title;
 
     // ** 내용
+    @NonNull
     private String contents;
 
-    // ** 최초 작성 시간
+    @NonNull
+    private String userName;
+
     private LocalDateTime createTime;
-    // ** 수정 시간
+
     private LocalDateTime updateTime;
 
-    // ** 엔티티
     public Board toEntity() {
         return Board.builder()
                 .title(title)
                 .contents(contents)
+                .userName(userName)
                 .createTime(createTime)
                 .updateTime(updateTime)
                 .build();
@@ -41,8 +45,8 @@ public class BoardDTO {
                 board.getId(),
                 board.getTitle(),
                 board.getContents(),
+                board.getUserName(),
                 board.getCreateTime(),
-                board.getUpdateTime()
-          );
+                board.getUpdateTime() );
     }
 }

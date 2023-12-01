@@ -19,19 +19,18 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    // ** 작성자 이름
-    @Column(length = 50)
-    private String userName;
-    
-    // ** 게시물 제목
-    @Column(length = 50)
-    private String title;
 
+    // ** 작성자 이름
+    @Column(length = 50, unique = true)
+    private String userName;
+
+    // ** 게시물 제목
+    @Column(length = 50, nullable = false)
+    private String title;
     // ** 내용
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String contents;
-    
+
     // ** 최초 작성 시간
     private LocalDateTime createTime;
 
@@ -46,8 +45,9 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comment =  new ArrayList<>();
 
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<BoardFile> boardFiles =  new ArrayList<>();
+    private List<BoardFile> files =  new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

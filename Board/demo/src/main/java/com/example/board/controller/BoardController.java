@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -23,15 +24,15 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final FileRepository fileRepository;
 
-    // ** create.html을 불러오는 컨트롤러
+
+    // CRUD Create / "create" 템플릿을 렌더링하여 반환
     @GetMapping("/create")
     public String create(){
         return "create";
     }
 
-
+    // CRUD Read / "paging" 템플릿을 렌더링하여 반환
     @GetMapping(value = {"/paging", "/"})
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model modal){
 
@@ -47,37 +48,38 @@ public class BoardController {
 
         return "paging";
     }
-
+    // CRUD update / "update" 템플릿을 렌더링하여 반환
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable Long id, Model model) {
 
         BoardDTO boardDTO = boardService.findById(id);
+        List<BoardFile> existingFiles = boardService.findByBoardId(id); // 기존 파일 목록 조회
         model.addAttribute("board", boardDTO);
+        model.addAttribute("existingFiles", existingFiles);
+
         return "update";
     }
-
+    // CRUD update / "/board/"로 리다이렉트
     @PostMapping("/update")
-    public String update(@ModelAttribute BoardDTO boardDTO) {
-        boardService.update(boardDTO);
+    public String update(@ModelAttribute BoardDTO boardDTO, @RequestParam MultipartFile[] files) throws IOException {
+        boardService.update(boardDTO,files);
         return "redirect:/board/";
     }
-
-
+    // CRUD update /"detail" 템플릿을 렌더링하여 반환
     @GetMapping("/{id}")
     public String paging(@PathVariable Long id, Model model,
                          @PageableDefault(page = 1) Pageable pageable){
 
         BoardDTO dto = boardService.findById(id);
+        List<BoardFile> files = boardService.findByBoardId(id);
 
         model.addAttribute("board", dto);
         model.addAttribute("page", pageable.getPageNumber());
-
-        List<BoardFile> byBoardFiles = fileRepository.findByBoardId(id);
-        model.addAttribute("files", byBoardFiles);
+        model.addAttribute("files", files != null ? files : Collections.emptyList());
 
         return "detail";
     }
-
+    // CRUD update / "/board/"로 리다이렉트
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO,
                        @RequestParam MultipartFile[] files) throws IOException {
@@ -87,15 +89,20 @@ public class BoardController {
 
         return "redirect:/board/";
     }
-
-    @GetMapping("/delete/{id}")
+    // CRUD delete /  "/board/paging"으로 리다이렉트
+    @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         System.out.println(id);
         boardService.delete(id);
         return "redirect:/board/paging";
     }
-}
 
+    @GetMapping("/deleteByBoardFile/{id}")
+    public void deleteByBoardFilePost(@PathVariable Long id) {
+        System.out.println(id);
+        boardService.deleteByBoardFile(id);
+    }
+}
 
 
 

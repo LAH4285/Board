@@ -1,21 +1,18 @@
-package com.example.board.dto;
+package com.example.demo.dto;
 
-import com.example.board.entity.User;
+import com.example.demo.entity.User;
 import lombok.Getter;
 import lombok.Setter;
-
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Collections;
 
 public class UserDTO {
 
     @Getter
     @Setter
     public static class JoinDTO {
-
         @NotEmpty
         @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
         private String email;
@@ -28,13 +25,14 @@ public class UserDTO {
         @NotEmpty
         private String username;
 
-        public User toEntity() {
+        public User toEntity(){
             return User.builder()
                     .email(email)
                     .password(password)
                     .username(username)
-                    .roles(Collections.singletonList("ROLE_USER"))
                     .build();
         }
     }
+
+
 }

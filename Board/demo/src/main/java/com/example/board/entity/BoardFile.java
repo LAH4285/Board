@@ -22,10 +22,12 @@ public class BoardFile {
     // ** 파일 이름
     private String fileName;
 
+    // ** uuid (랜덤 키)
+    private String uuid;
+
     // ** 파일 포멧
     private String fileType;
 
-    private String uuid;
     // ** 파일 크기
     private Long fileSize;
 
@@ -34,23 +36,26 @@ public class BoardFile {
     private Board board;
 
     @Builder
-    public BoardFile(Long id, String filePath, String fileName, String fileType, String uuid, Long fileSize, Board board) {
+    public BoardFile(Long id, String filePath, String fileName , String uuid, String fileType, Long fileSize, Board board) {
         this.id = id;
         this.filePath = filePath;
         this.fileName = fileName;
-        this.fileType = fileType;
         this.uuid = uuid;
+        this.fileType = fileType;
         this.fileSize = fileSize;
         this.board = board;
     }
 
-    public BoardFile toUpdate(Board board) {
-        BoardFile boardFile = new BoardFile();
-        this.board = board;
-        return boardFile;
+    public void updateFromDTO(BoardFile boardFile){
+
+        this.filePath = boardFile.getFilePath();
+        this.fileName = boardFile.getFileName();
+        this.uuid = boardFile.getUuid();
+        this.fileType = boardFile.getFileType();
+        this.fileSize = boardFile.getFileSize();
+        this.board = boardFile.getBoard();
     }
 }
-
 
 
 

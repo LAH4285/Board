@@ -19,6 +19,9 @@ public class CommentDTO {
 
     private Long boardId;
 
+    public CommentDTO(Long id, String writer, String contents) {
+    }
+
     public Comment toEntity() {
         return Comment.builder()
                 .writer(writer)
