@@ -94,7 +94,7 @@ public class BoardController {
         return "redirect:/board/";
     }
     // CRUD delete /  "/board/paging"으로 리다이렉트
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         System.out.println(id);
         boardService.delete(id);

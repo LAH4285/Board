@@ -34,24 +34,23 @@
             cursor: pointer;
         }
     </style>
-    <script>
-        function deleteAndRefresh(id) {
-    console.log("deleteAndRefresh 함수가 호출되었습니다."); // 로그 출력
-    $.ajax({
-      url: '/board/deleteByBoardFile/' + id,
-      type: 'GET',
-      success: function() {
-        console.log("DELETE 요청이 성공적으로 완료되었습니다."); // 로그 출력
-        // 삭제 후에 필요한 업데이트 작업을 수행합니다.
-        // 예시로는 페이지 전체를 새로고침하도록 하였습니다.
-        location.reload();
-      },
-      error: function() {
-        console.log("DELETE 요청이 실패하였습니다."); // 로그 출력
-      }
-    });
-  }
-
+    <script th:inline="javascript">
+        const deleteFile = (id) => {
+            $.ajax({
+                type: "DELETE",
+                url: "/board/deleteFile/" + id,
+                success: function (res) {
+                    console.log("파일 삭제 성공", res);
+                    // 성공 시 처리, 예를 들어 다른 페이지로 리디렉션하거나 UI를 업데이트합니다.
+                    location.reload();  // 예시로 현재 페이지를 새로고침하는 방식입니다.
+                },
+                error: function (err) {
+                    console.log("파일 삭제 오류", err);
+                    // 오류 시 처리, 예를 들어 알림을 표시합니다.
+                    alert("파일 삭제 중 오류 발생");
+                }
+            });
+        };
     </script>
 </head>
 <body>
@@ -65,7 +64,7 @@
     <ul>
         <li th:each="file : ${existingFiles}">
             <span th:text="${file.fileName}"></span>
-            <button class="btn btn-danger" onclick="deleteAndRefresh(${file.id})">삭제</button>
+            <button class="btn btn-danger" onclick="deleteFile([[${board.id}]])">파일 삭제</button>
         </li>
     </ul>
 

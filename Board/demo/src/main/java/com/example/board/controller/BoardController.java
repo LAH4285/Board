@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -92,15 +94,18 @@ public class BoardController {
     // CRUD delete /  "/board/paging"으로 리다이렉트
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        System.out.println(id);
         boardService.delete(id);
         return "redirect:/board/paging";
     }
 
-    @GetMapping("/deleteByBoardFile/{id}")
-    public void deleteByBoardFilePost(@PathVariable Long id) {
-        System.out.println(id);
-        boardService.deleteByBoardFile(id);
+    @DeleteMapping("/deleteFile/{id}")
+    public ResponseEntity<String> deleteFile(@PathVariable Long id) {
+        try {
+            boardService.deleteByBoardFile(id);
+            return ResponseEntity.ok("파일 삭제 성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 삭제 중 오류 발생");
+        }
     }
 }
 

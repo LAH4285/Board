@@ -131,11 +131,11 @@
     </table>
 </div>
 
-<body>
+</body>
 <script th:inline="javascript">
     const commentDelete = (id) => {
     $.ajax({
-        type: "DELETE",
+        type: "POST",
         url: "/comment/delete/" + id,
         success: function (res) {
             console.log("삭제 성공", res);
