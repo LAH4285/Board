@@ -1,77 +1,74 @@
-게시판 구현
+Springboot Framework를 활용한 게시판 구현V1.4.2
 ===
 ### 개요
-- SpringFramework를 이용한 게시판 구현 프로젝트  
+-SpringFramework를 이용한 게시판 구현 프로젝트  
 ### 일정  
-- 23.11.21 ~ 23.12.03
-+ 개인 프로젝트  
+ -23.11.21 ~ 23.12.03
+ 
+ -개인 프로젝트  
 - - - - - - - - -
 ### 사용 기술 및 개발 환경
-- O/S : window11 Home 22H2
-- DB : MySQL WORKBENCH 8.0.35 CE  
-- Framework/Flatform : Spring Data JPA, Thymeleaf
-- Spring Boot 2.6.7
-- JDK 11
-- Language : JAVA, HTML5  
-- IDE: IntelliJ IDEA Community
+-O/S : window11 Home 22H2
+-DB : MySQL WORKBENCH 8.0.35 CE   
+-Framework/Flatform : Spring Data JPA, Thymeleaf  
+-Spring Boot 2.6.7  
+-JDK 11, Gradle   
+-Language : JAVA, HTML5   
+-IDE: IntelliJ IDEA Community
 - - - - - - - - - - - - - -
 ### 구현 기능
-
 1. 글쓰기(/board/save)
 2. 글목록(/board/)
 3. 글조회(/board/{id})
-> ※ 댓글
-> 1. 댓글작성
-> > - 글 조회 기능에 댓글 작성 구현
-> 2. 댓글 수정 및 삭제
-> > - 작성된 댓글 수정 및 삭제 기능 구현(hidden)
+
+4. 글수정(/board/update/{id})  
+      -상세화면에서 수정 버튼 클릭  
+      -서버에서 해당 게시글의 정보를 가지고 수정 화면 출력  
+      -제목, 내용 수정 입력 받아서 서버로 요청  
+
+__※ 수정 처리__    
+1. 글삭제(/board/delete/{id})
+2. 페이징처리(/board/paging)   
+  -/board/paging?page=1   
+  -/board/paging/1
+3. 게시글    
+ -한페이지에 5개씩 => 3개   
+ -한페이지에 3개씩 => 5개
+4. 파일(이미지)첨부하기
+5. 단일 파일 첨부
+6. 다중 파일 첨부
+
+__※ 댓글__
+ 1. 댓글작성  
+  -글 조회 기능에 댓글 작성 구현
+ 2. 댓글 수정 및 삭제  
+-작성된 댓글 수정 및 삭제 기능 구현(hidden)
 
 
-4. 글수정(/board/update/{id})
- - 상세화면에서 수정 버튼 클릭
- - 서버에서 해당 게시글의 정보를 가지고 수정 화면 출력
- - 제목, 내용 수정 입력 받아서 서버로 요청
->
-> ※ 수정 처리
-> 1. 글삭제(/board/delete/{id})
-> 2. 페이징처리(/board/paging)
->  > - /board/paging?page=1
->  > - /board/paging/1
->
-> 3. 게시글
-> > - 한페이지에 5개씩 => 3개
-> > - 한페이지에 3개씩 => 5개
-> 4. 파일(이미지)첨부하기
-> 5. 단일 파일 첨부
-> 6. 다중 파일 첨부
-
-5. 글삭제(/board/delete/{id})
-
-### ※ 향후 업데이트 예정 기능
+###  향후 업데이트 예정 기능
 
 1. 회원가입 및 로그인 구현
-2. Spring Security
- - JWT토큰사용
- - PasswordEncoder기능 추가
-3. 사용
+2. Spring Security    
+ -JWT토큰사용   
+ -PasswordEncoder기능 추가
 
  - - - - - - - - - - - - - -
 
 
 #### v1.0.0 (2023.11.21)
-1. 게시글 작성(/board/save)
-- 작성자, 제목, 내용
+1. 게시글 작성(/board/save)  
+  -작성자, 제목, 내용
 2. 메인 페이지 이동(/)
 
 
 #### v1.1.0 (2023.11.22)
- 1. 게시판 페이징 기능 구현(/board/paging)
-  - 한 페이지 5개씩
-   - 페이지 최대 3개씩
+ 1. 게시판 페이징 기능 구현(/board/paging)  
+   -한 페이지 5개씩     
+   -페이지 최대 3개씩
 
- 2. 게시글 조회 기능 구현(/board/{id})
-- 글번호, 제목, 작성일, 내용
-- 목록, 수정, 삭제 버튼
+ 2. 게시글 조회 기능 구현(/board/{id})   
+-글번호, 제목, 작성일, 내용   
+-목록, 수정, 삭제 버튼
 
 #### v1.2.0 (2023.11.23)
 
@@ -87,10 +84,10 @@
 2. 게시글에 달린 댓글들 보이기(/comment/comments)
 
 #### v1.3.1 (2023.11.27)
-1. [수정] 게시글 작성(/board/save)
-- 파일 첨부 (단일)
-2. [추가] 게시글 수정 적용(/board/update)
-- 첨부한 파일 수정 가능
+1. [수정] 게시글 작성(/board/save)   
+  -파일 첨부 (단일)
+2. [추가] 게시글 수정 적용(/board/update)     
+  -첨부한 파일 수정 가능
 
 #### v1.3.2 (2023.11.28)
 1. [추가] 게시글에 첨부한 파일(이미지) 다운(/download/{uuid}/{filename})
@@ -103,8 +100,10 @@
 2. 댓글 삭제 기능 구현(/board/delete/{id})
 
 #### v1.4.1 (2023.11.30)
- 1. [추가] 게시글 수정 적용(/board/update)
-- 첨부한 파일 수정 가능(다중)
+ 1. [추가] 게시글 수정 적용(/board/update)   
+-첨부한 파일 수정 가능(다중)
+
 2. 화면디자인 수정
-#### v1.4.2 (2023.12.01)
-- HTML5 알람 추가
+
+#### v1.4.2 (2023.12.01)    
+1. HTML5 알람 추가
