@@ -2,31 +2,132 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>즐거운 게시판</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* Reset some default styles */
+        body, h1, h2, h3, p {
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Noto Sans KR', sans-serif; /* Use a Korean font */
             background-color: #f6f6f6;
             margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            background-color: #4285f4;
+            color: #fff;
             padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        main {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            flex-wrap: wrap;
+            justify-content: space-around;
         }
 
         .container {
-            background-color: #e6f2ff;
+            background-color: #ffffff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
+            margin-bottom: 20px;
+            width: 45%; /* Adjust the width based on your preference */
+            box-sizing: border-box;
         }
 
-        h1 {
-            font-size: 36px;
+        h2 {
+            font-size: 24px;
             margin-bottom: 20px;
+        }
+        .write-section {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+            width: 45%; /* Adjust the width based on your preference */
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .write-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #4285f4;
+        }
+
+        .write-section p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .write-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .write-button:hover {
+            background-color: #3367d6;
+        }
+
+        .post-list {
+            text-align: left;
+            margin-top: 20px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .post-list li {
+            margin-bottom: 20px; /* Increase spacing between posts */
+            padding: 20px;
+            background-color: #f9f9f9; /* Lighter background color */
+            border: 1px solid #ddd; /* Lighter border color */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-list li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .post-list li a:hover {
+            background-color: #f0f0f0; /* Lighter hover background color */
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 10px; /* Adjust spacing */
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 0;
         }
 
         .button-container {
@@ -46,21 +147,74 @@
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .button:hover {
             background-color: #3367d6;
         }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        footer .footer-text {
+            margin: 0;
+        }
+
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Home</h1>
-    <div class="button-container">
-        <a href="/user/join" class="button">회원가입</a>
-        <a href="/board/paging" class="button">목록</a>
-        <a href="/board/create" class="button">글쓰기</a>
+<header>
+    <h1>즐거운 게시판</h1>
+</header>
+<main>
+    <section class="container">
+        <h2>최신 게시글</h2>
+        <ul class="post-list">
+            <li>
+                <a href="/board/1">
+                    <h3>게시글 1 제목</h3>
+                    <p>게시글 1 내용</p>
+                </a>
+            </li>
+            <li>
+                <a href="/board/2">
+                    <h3>게시글 2 제목</h3>
+                    <p>게시글 2 내용</p>
+                </a>
+            </li>
+            <li>
+                <a href="/board/3">
+                    <h3>게시글 3 제목</h3>
+                    <p>게시글 3 내용</p>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <section class="container">
+        <h2>게시글 작성</h2>
+        <div class="button-container">
+            <a href="/board/create" class="button">글쓰기</a>
+            <a href="/user/join" class="button">회원가입</a>
+            <a href="/board/paging" class="button">목록</a>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="footer-text">
+        즐거운 게시판에 오신 것을 환영합니다.
     </div>
-</div>
+</footer>
 </body>
 </html>
