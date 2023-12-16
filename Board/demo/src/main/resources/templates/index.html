@@ -1,121 +1,23 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>아현 쇼핑몰</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: 'Nanum Gothic', Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* 화면 높이보다 컨텐츠가 적어도 최소한 전체 화면에 나타날 수 있도록 설정 */
-        }
-
-        .container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .left-section,
-        .right-section {
-            width: 48%;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .button-container {
-            display: flex;
-            flex-direction: row;
-            align-items: center; /* 중앙 정렬 */
-            margin-top: auto;
-            gap: 10px;
-        }
-
-        .button {
-            padding: 6px 12px;
-            font-size: 14px;
-            background-color: #005cbf;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-
-        }
-
-        .button:hover {
-            background-color: #003366;
-        }
-
-        .footer {
-            background-color: #005cbf;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            margin-top: auto; /* 화면 아래에 고정되도록 설정 */
-        }
-
-        .header {
-            background-color: #005cbf;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        @media (max-width: 768px) {
-            .button {
-                padding: 6px 8px;
-                font-size: 12px;
-            }
-        }
-    </style>
+    <title>Title</title>
 </head>
 <body>
-<div class="header">
-    <h1>아현 게시판</h1>
-</div>
-<div class="container">
-    <div class="left-section">
-        <h2>왼쪽 섹션</h2>
-        <p>왼쪽 섹션의 내용을 여기에 작성하세요.</p>
-    </div>
-    <div class="right-section">
-        <h2>오른쪽 섹션</h2>
-        <p>오른쪽 섹션의 내용을 여기에 작성하세요.</p>
-    </div>
-</div>
-<div class="button-container">
-    <a href="/board/paging" class="btn btn-primary button">목록</a>
-    <a href="/board/create" class="btn btn-primary button">글쓰기</a>
-    <button type="button" onclick="redirectToJoin()">로그인</button>
-</div>
-<div class="footer">
-    <p>아현 블로그입니다 이쁘게 봐주세요.</p>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+Home
+<br>
+<br>
+<button onclick="create()"> 글쓰기</button>
+<button onclick="paging()"> 목록</button>
+</body>
 <script>
-    function redirectToJoin() {
-        window.location.href = 'http://localhost:8080/login';
+    const create = () => {
+        location.href = "/board/create";
+    }
+
+    const paging = () => {
+        location.href = "/board/paging";
     }
 </script>
-</body>
 </html>
