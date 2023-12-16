@@ -1,220 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>즐거운 게시판</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>아현 쇼핑몰</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
-        /* Reset some default styles */
-        body, h1, h2, h3, p {
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Noto Sans KR', sans-serif; /* Use a Korean font */
-            background-color: #f6f6f6;
+            font-family: 'Nanum Gothic', Arial, sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
-            padding: 0;
-        }
-
-        header {
-            text-align: center;
-            background-color: #4285f4;
-            color: #fff;
             padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 36px;
-        }
-
-        main {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
+            flex-direction: column;
+            min-height: 100vh; /* 화면 높이보다 컨텐츠가 적어도 최소한 전체 화면에 나타날 수 있도록 설정 */
         }
 
         .container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .left-section,
+        .right-section {
+            width: 48%;
             background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-bottom: 20px;
-            width: 45%; /* Adjust the width based on your preference */
-            box-sizing: border-box;
-        }
-
-        h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .write-section {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-bottom: 20px;
-            width: 45%; /* Adjust the width based on your preference */
-            box-sizing: border-box;
-            position: relative;
-        }
-
-        .write-section h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #4285f4;
-        }
-
-        .write-section p {
-            font-size: 16px;
-            color: #666;
-        }
-
-        .write-button {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 20px;
-            background-color: #4285f4;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        .write-button:hover {
-            background-color: #3367d6;
-        }
-
-        .post-list {
-            text-align: left;
-            margin-top: 20px;
-            list-style: none;
-            padding: 0;
-        }
-
-        .post-list li {
-            margin-bottom: 20px; /* Increase spacing between posts */
             padding: 20px;
-            background-color: #f9f9f9; /* Lighter background color */
-            border: 1px solid #ddd; /* Lighter border color */
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .post-list li a {
-            text-decoration: none;
-            color: #333;
-            display: block;
-        }
-
-        .post-list li a:hover {
-            background-color: #f0f0f0; /* Lighter hover background color */
-        }
-
-        h3 {
-            font-size: 20px;
-            margin-bottom: 10px; /* Adjust spacing */
-        }
-
-        p {
-            font-size: 16px;
-            margin-bottom: 0;
         }
 
         .button-container {
             display: flex;
+            flex-direction: row;
+            align-items: center; /* 중앙 정렬 */
+            margin-top: auto;
             gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
         }
 
         .button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #4285f4;
+            padding: 6px 12px;
+            font-size: 14px;
+            background-color: #005cbf;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
         }
 
         .button:hover {
-            background-color: #3367d6;
+            background-color: #003366;
         }
 
-        footer {
-            background-color: #333;
+        .footer {
+            background-color: #005cbf;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            margin-top: auto; /* 화면 아래에 고정되도록 설정 */
+        }
+
+        .header {
+            background-color: #005cbf;
             color: #fff;
             padding: 20px;
             text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            left: 0;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        footer .footer-text {
-            margin: 0;
+        @media (max-width: 768px) {
+            .button {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
         }
-
     </style>
 </head>
 <body>
-<header>
-    <h1>즐거운 게시판</h1>
-</header>
-<main>
-    <section class="container">
-        <h2>최신 게시글</h2>
-        <ul class="post-list">
-            <li>
-                <a href="/board/1">
-                    <h3>게시글 1 제목</h3>
-                    <p>게시글 1 내용</p>
-                </a>
-            </li>
-            <li>
-                <a href="/board/2">
-                    <h3>게시글 2 제목</h3>
-                    <p>게시글 2 내용</p>
-                </a>
-            </li>
-            <li>
-                <a href="/board/3">
-                    <h3>게시글 3 제목</h3>
-                    <p>게시글 3 내용</p>
-                </a>
-            </li>
-        </ul>
-    </section>
-    <section class="container">
-        <h2>게시글 작성</h2>
-        <div class="button-container">
-            <a href="/board/create" class="button">글쓰기</a>
-            <a href="/user/join" class="button">회원가입</a>
-            <a href="/board/paging" class="button">목록</a>
-        </div>
-    </section>
-</main>
-<footer>
-    <div class="footer-text">
-        즐거운 게시판에 오신 것을 환영합니다.
+<div class="header">
+    <h1>아현 게시판</h1>
+</div>
+<div class="container">
+    <div class="left-section">
+        <h2>왼쪽 섹션</h2>
+        <p>왼쪽 섹션의 내용을 여기에 작성하세요.</p>
     </div>
-</footer>
+    <div class="right-section">
+        <h2>오른쪽 섹션</h2>
+        <p>오른쪽 섹션의 내용을 여기에 작성하세요.</p>
+    </div>
+</div>
+<div class="button-container">
+    <a href="/board/paging" class="btn btn-primary button">목록</a>
+    <a href="/board/create" class="btn btn-primary button">글쓰기</a>
+    <button type="button" onclick="redirectToJoin()">로그인</button>
+</div>
+<div class="footer">
+    <p>아현 블로그입니다 이쁘게 봐주세요.</p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<script>
+    function redirectToJoin() {
+        window.location.href = 'http://localhost:8080/login';
+    }
+</script>
 </body>
 </html>

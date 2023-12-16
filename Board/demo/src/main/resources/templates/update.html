@@ -1,77 +1,116 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Update Board</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f6f6f6;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4285f4;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #4285f4;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
         form {
-            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            width: 50%;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
         }
 
         input[type="text"],
-        textarea {
+        textarea,
+        input[type="file"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 3px;
             margin-bottom: 10px;
+            box-sizing: border-box;
+            resize: none;
         }
 
         input[type="submit"] {
-            padding: 10px 20px;
             background-color: #4285f4;
             color: #fff;
+            padding: 10px 20px;
             border: none;
             border-radius: 3px;
             cursor: pointer;
+            display: inline-block;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3367d6;
         }
     </style>
-    <script th:inline="javascript">
-        const deleteFile = (id) => {
-            $.ajax({
-                type: "DELETE",
-                url: "/board/deleteFile/" + id,
-                success: function (res) {
-                    console.log("파일 삭제 성공", res);
-                    // 성공 시 처리, 예를 들어 다른 페이지로 리디렉션하거나 UI를 업데이트합니다.
-                    location.reload();  // 예시로 현재 페이지를 새로고침하는 방식입니다.
-                },
-                error: function (err) {
-                    console.log("파일 삭제 오류", err);
-                    // 오류 시 처리, 예를 들어 알림을 표시합니다.
-                    alert("파일 삭제 중 오류 발생");
-                }
+    <script>
+        function deleteAndRefresh(id) {
+            fetch('/board/deleteByBoardFile/' + id, {
+                method: 'DELETE'
+            }).then(function() {
+                location.reload(); // 현재 페이지를 새로고침
             });
-        };
+        }
     </script>
 </head>
 <body>
+
+<header>
+    <h1>Update Board Form</h1>
+</header>
+
 <form action="/board/update" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" th:value="${board.id}">
+
     <label for="title">Title:</label>
-    <input type="text" name="title" id="title" th:value="${board.getTitle()}" required> <br>
+    <input type="text" name="title" id="title" th:value="${board.title}">
+
     <label for="contents">Contents:</label>
-    <textarea name="contents" id="contents" cols="30" rows="10"></textarea> <br>
-    <label>기존 파일:</label>
+    <textarea name="contents" id="contents" cols="30" rows="5" th:text="${board.contents}"></textarea>
+
+    <label>Existing Files:</label>
     <ul>
         <li th:each="file : ${existingFiles}">
             <span th:text="${file.fileName}"></span>
-            <button class="btn btn-danger" onclick="deleteFile([[${board.id}]])">파일 삭제</button>
+            <button class="delete-btn" onclick="deleteAndRefresh(${file.id})">Delete</button>
         </li>
     </ul>
 
-    <label for="files">파일 선택:</label>
+    <label for="files">Choose Files:</label>
     <input type="file" id="files" name="files" multiple>
-    <br>
-    <input type="submit" value="수정">
+
+    <input type="submit" value="Update">
 </form>
+
+<footer>
+    <p>&copy; 2023 Your Website</p>
+</footer>
+
 </body>
 </html>

@@ -1,23 +1,70 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Join Form</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #3498db;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #27ae60;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #219552;
+        }
+    </style>
 </head>
 <body>
 
 <h1>Join</h1>
 
-<form id="joinForm" action="/user/join" method="post" enctype="multipart/form-data">
+<form th:action="@{/user/join}" method="post" id="joinForm">
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br><br>
+    <input type="email" id="email" name="email" required>
 
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
+    <input type="password" id="password" name="password" required>
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br><br>
+    <label for="userName">userName:</label>
+    <input type="userName" id="userName" name="userName" required>
 
     <input type="submit" value="Submit">
 </form>
@@ -25,42 +72,43 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('joinForm');
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const userName = document.getElementById('userName').value;
 
+            const data = {
+                email,
+                password,
+                userName
+            };
 
-                const data = {
-                    email,
-                    password,
-                    username,
-                };
+            try {
+                const response = await fetch(form.getAttribute('action'), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
 
-                try {
-                    const response = await fetch('http://localhost:8080/user/join', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
+                const result = await response.json();
 
-                    const result = await response.json();
-
-                    if (result.success) {
-                        alert("회원가입에 성공했습니다!");
-                    } else {
-                        alert("Error: " + result.error.message);
-                    }
-
-                } catch (error) {
-                    console.error('Error:', error);
+                if (result.success) {
+                    alert("회원가입에 성공했습니다!");
+                    location.href = '/login';
+                } else {
+                    alert("Error: " + result.error.message);
                 }
-            });
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
         });
+    });
 </script>
+
 </body>
 </html>

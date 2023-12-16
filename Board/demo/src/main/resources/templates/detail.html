@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>detail</title>
+    <title>Board Detail</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <style>
@@ -12,6 +12,22 @@
             margin: 0;
             padding: 20px;
             color: #000;
+        }
+
+        header {
+            background-color: #4285f4;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 70%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         table {
@@ -32,14 +48,16 @@
 
         #comment-write {
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        input[type="text"] {
-            width: 200px;
+        #comment-write input {
+            width: 48%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 3px;
-            margin-right: 10px;
+            box-sizing: border-box;
         }
 
         #comment-write-btn {
@@ -54,82 +72,101 @@
         #comment-list {
             margin-top: 20px;
         }
+
+        footer {
+            background-color: #4285f4;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-<table>
-    <tr>
-        <th>id</th>
-        <td th:text="${board.id}"></td>
-    </tr>
-    <tr>
-        <th>title</th>
-        <td th:text="${board.getTitle}"></td>
-    </tr>
-    <tr>
-        <th>userName</th>
-        <td th:text="${board.getUserName}"></td>
-    </tr>
-    <tr>
-        <th>date</th>
-        <td th:text="${board.getCreateTime}"></td>
-    </tr>
-    <tr>
-        <th>contents</th>
-        <td th:text="${board.getContents}"></td>
-    </tr>
-</table>
 
-<div th:if="${files != null}">
-    <h3>첨부 파일</h3>
-    <ul>
-        <li th:each="file : ${files}">
-            <!-- 다운로드 링크 추가 -->
-            <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}"
-               th:text="${file.fileName} + ' Download'">Download</a>
-        </li>
-    </ul>
-</div>
+<header>
+    <h1>Board Detail</h1>
+</header>
 
-<button class="btn btn-primary" onclick="listReq()">목록</button>
-<button class="btn btn-primary" onclick="updateReq()">수정</button>
-<button class="btn btn-danger" onclick="deleteReq()">삭제</button>
-
-
-<!-- 댓글 작성 부분 -->
-<div id="comment-write">
-    <input type="text" id="writer" placeholder="작성자">
-    <input type="text" id="contents" placeholder="내용">
-    <button class="btn btn-primary" id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
-</div>
-<div id="update-form" style="display: none;">
-    <h3>댓글 수정</h3>
-    <input type="hidden" id="update-comment-id">
-    <input type="text" id="update-comment-writer" placeholder="작성자">
-    <input type="text" id="update-comment-contents" placeholder="내용">
-    <button class="btn btn-primary" onclick="updateComment()">수정 완료</button>
-</div>
-
-<!-- 댓글 출력 부분 -->
-<div id="comment-list">
+<div class="container">
     <table>
         <tr>
-            <th>댓글번호</th>
-            <th>작성자</th>
-            <th>내용</th>
-            <th>동작</th> <!-- 수정 버튼과 삭제 버튼을 포함한 새로운 열 추가 -->
+            <th>id</th>
+            <td th:text="${board.id}"></td>
         </tr>
-        <tr th:each="comment: ${commentList}">
-            <td th:text="${comment.id}"></td>
-            <td th:text="${comment.writer}"></td>
-            <td th:text="${comment.contents}"></td>
-            <td>
-                <button class="btn btn-primary" onclick="showUpdateForm(${comment.id}, '${comment.writer}', '${comment.contents}')">수정</button>
-                <button class="btn btn-danger" onclick="commentDelete(${comment.id})">삭제</button>
-            </td>
+        <tr>
+            <th>title</th>
+            <td th:text="${board.getTitle}"></td>
+        </tr>
+        <tr>
+            <th>userName</th>
+            <td th:text="${board.getUserName}"></td>
+        </tr>
+        <tr>
+            <th>date</th>
+            <td th:text="${board.getCreateTime}"></td>
+        </tr>
+        <tr>
+            <th>contents</th>
+            <td th:text="${board.getContents}"></td>
         </tr>
     </table>
+
+    <div th:if="${files != null}">
+        <h3>첨부 파일</h3>
+        <ul>
+            <li th:each="file : ${files}">
+                <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}"
+                   th:text="${file.fileName} + ' Download'">Download</a>
+            </li>
+        </ul>
+    </div>
+
+    <button class="btn btn-primary" onclick="listReq()">목록</button>
+    <button class="btn btn-primary" onclick="updateReq()">수정</button>
+    <button class="btn btn-danger" onclick="deleteReq()">삭제</button>
+
+    <!-- 댓글 작성 부분 -->
+    <div id="comment-write">
+        <input type="text" id="writer" placeholder="작성자">
+        <input type="text" id="contents" placeholder="내용">
+        <button class="btn btn-primary" id="comment-write-btn" onclick="commentWrite()">댓글 작성</button>
+    </div>
+    <div id="update-form" style="display: none;">
+        <h3>댓글 수정</h3>
+        <input type="hidden" id="update-comment-id">
+        <input type="text" id="update-comment-writer" placeholder="작성자">
+        <input type="text" id="update-comment-contents" placeholder="내용">
+        <button class="btn btn-primary" onclick="updateComment()">수정 완료</button>
+    </div>
+
+    <!-- 댓글 출력 부분 -->
+    <div id="comment-list">
+        <table>
+            <tr>
+                <th>댓글번호</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>동작</th>
+            </tr>
+            <tr th:each="comment: ${commentList}">
+                <td th:text="${comment.id}"></td>
+                <td th:text="${comment.writer}"></td>
+                <td th:text="${comment.contents}"></td>
+                <td>
+                    <button class="btn btn-primary" onclick="showUpdateForm(${comment.id}, '${comment.writer}', '${comment.contents}')">수정</button>
+                    <button class="btn btn-danger" onclick="commentDelete(${comment.id})">삭제</button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
+
+<footer>
+    <p>&copy; 2023 Your Website</p>
+</footer>
 
 </body>
 <script th:inline="javascript">
@@ -253,6 +290,9 @@ const loadComments = () => {
             }
         });
     };
+
+
+
 
        const listReq = () => {
            console.log("목록 요청");
