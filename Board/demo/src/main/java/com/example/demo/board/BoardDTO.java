@@ -41,7 +41,7 @@ public class BoardDTO {
                 board.getId(),
                 board.getTitle(),
                 board.getContents(),
-                board.getUser().getEmail(),
+                board.getWriter(),
                 board.getCreateTime(),
                 board.getUpdateTime() );
     }

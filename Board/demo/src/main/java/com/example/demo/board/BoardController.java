@@ -34,13 +34,13 @@ public class BoardController {
     @GetMapping(value = {"/paging", "/"})
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model modal){
 
-        Page<BoardDTO> boards = boardService.paging(pageable);
+        Page<BoardDTO> boardList = boardService.paging(pageable);
 
         int blockLimit = 3;
         int startPage = (int)(Math.ceil((double)pageable.getPageNumber() / blockLimit) - 1) * blockLimit + 1;
-        int endPage = ((startPage + blockLimit - 1) < boards.getTotalPages()) ? (startPage + blockLimit - 1) : boards.getTotalPages();
+        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? (startPage + blockLimit - 1) : boardList.getTotalPages();
 
-        modal.addAttribute("boardList", boards);
+        modal.addAttribute("boardList", boardList);
         modal.addAttribute("startPage", startPage);
         modal.addAttribute("endPage",endPage);
 
@@ -81,11 +81,11 @@ public class BoardController {
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO,
                        @RequestParam MultipartFile[] files) throws IOException {
-
         boardDTO.setCreateTime(LocalDateTime.now());
         boardService.save(boardDTO, files);
+        System.out.println("○ 게시글 저장 ○");
 
-        return "redirect:/board/";
+        return "paging";
     }
     // CRUD delete /  "/board/paging"으로 리다이렉트
     @GetMapping("/delete/{id}")

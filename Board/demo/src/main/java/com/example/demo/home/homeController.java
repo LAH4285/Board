@@ -13,5 +13,9 @@ public class homeController {
     public String loginform(){return "login";}
     @GetMapping("/join")
     public String joinform(){return "join";}
+    @GetMapping("/board/paging")
+    public String board(){
+        return "paging";
+    }
 
 }

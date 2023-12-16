@@ -1,16 +1,12 @@
 package com.example.demo.board;
 
-import com.example.demo.User.User;
-import com.example.demo.User.UserService;
 import com.example.demo.boardFile.BoardFile;
 import com.example.demo.boardFile.FileRepository;
-import com.example.demo.core.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +23,7 @@ import java.util.UUID;
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardService {
     private final BoardRepository boardRepository;
     private final FileRepository fileRepository;
@@ -112,11 +109,13 @@ public class BoardService {
                         .build();
 
                 fileRepository.save(boardFile);
+                log.info("정보확인" + boardFile);
             }
         }
         catch (Exception e){
             Long id = boardRepository.save(dto.toEntity()).getId();
             Board board = boardRepository.findById(id).get();
+            log.info("정보확인" + board);
         }
     }
 

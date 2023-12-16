@@ -58,7 +58,7 @@ public class Board {
     @Builder
     public Board(Long id, String writer, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
         this.id = id;
-        this.writer = user.getEmail();
+        this.writer = writer;
         this.title = title;
         this.contents = contents;
         this.createTime = createTime;
