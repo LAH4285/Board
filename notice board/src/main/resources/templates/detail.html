@@ -125,9 +125,6 @@
                 <a class="download-btn" th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}"
                    th:text="${file.fileName}">Download</a>
             </li>
-            <li th:each="file : ${files}">
-                <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}">다운로드</a>
-            </li>
         </ul>
     </div>
 
