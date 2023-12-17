@@ -42,6 +42,7 @@ Springboot Framework를 활용한 게시판 구현V1.4.2
 <div class="portfolio5.png">
   <img src="/image/portfolio5.png".>
 </div>
+
 ___※ 수정 처리___   
 
 1. 글삭제(/board/delete/{id})       
@@ -83,7 +84,7 @@ ___※ 수정 처리___
   <img src="/image/portfolio7.png".>
 </div>
 
-__※ 댓글__    
+___※ 댓글___    
  1. 댓글작성      
   
   -글 조회 기능에 댓글 작성 구현    
