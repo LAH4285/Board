@@ -19,11 +19,19 @@
             color: white;
             text-align: center;
             padding: 10px;
+            position: relative;
         }
 
         h1 {
             color: white;
             margin-top: 40px;
+            margin-bottom: 0;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
         }
 
         table {
@@ -118,6 +126,9 @@
 
 <header>
     <!-- 헤더 내용 -->
+    <div class="home-button">
+        <button onclick="goHome()">Home</button>
+    </div>
     <h1>게시판</h1>
 </header>
 
@@ -141,11 +152,11 @@
     <a th:href="${boardList.first} ? '#' : @{/board/paging(page=${boardList.number})}">이전</a>
 
     <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-            <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
-            <span th:unless="${page == boardList.number + 1}">
-                <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
-            </span>
+        <span th:if="${page == boardList.number + 1}" th:text="${page}"></span>
+        <span th:unless="${page == boardList.number + 1}">
+            <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
         </span>
+    </span>
 
     <a th:href="${boardList.last} ? '#' : @{/board/paging(page=${boardList.number + 2})}">다음</a>
     <a th:href="@{/board/paging(page=${boardList.totalPages})}">마지막</a>
@@ -165,6 +176,9 @@
 <script>
     const create = () => {
         location.href = "/board/create";
+    }
+    const goHome = () => {
+        location.href = "/";
     }
 </script>
 </body>

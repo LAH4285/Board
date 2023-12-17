@@ -28,7 +28,7 @@ public class CommentDTO {
     public static CommentDTO toCommentDTO(Comment comment, Long boardId) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setId(comment.getId());
-        commentDTO.setWriter(comment.getUser().getEmail());
+        commentDTO.setWriter(comment.getWriter());
         commentDTO.setContents(comment.getContents());
         commentDTO.setBoardId(boardId);
         return commentDTO;

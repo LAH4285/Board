@@ -31,9 +31,12 @@
         }
 
         table {
-            width: 100%;
+            width: 80%;
+            margin: 20px auto;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+
         }
 
         th, td {
@@ -75,12 +78,13 @@
 
         footer {
             background-color: #4285f4;
-            color: #fff;
-            padding: 10px;
+            color: white;
             text-align: center;
+            padding: 10px;
+            width: 100%;
             position: fixed;
             bottom: 0;
-            width: 100%;
+            display: none;
         }
     </style>
 </head>
@@ -102,7 +106,7 @@
         </tr>
         <tr>
             <th>userName</th>
-            <td th:text="${board.getUserName}"></td>
+            <td th:text="${board.getWriter}"></td>
         </tr>
         <tr>
             <th>date</th>
@@ -118,8 +122,11 @@
         <h3>첨부 파일</h3>
         <ul>
             <li th:each="file : ${files}">
-                <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}"
-                   th:text="${file.fileName} + ' Download'">Download</a>
+                <a class="download-btn" th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}"
+                   th:text="${file.fileName}">Download</a>
+            </li>
+            <li th:each="file : ${files}">
+                <a th:href="@{/download/{uuid}/{filename}(uuid=${file.uuid}, filename=${file.fileName})}">다운로드</a>
             </li>
         </ul>
     </div>

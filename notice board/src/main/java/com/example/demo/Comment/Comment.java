@@ -36,7 +36,7 @@ public class Comment {
     @Builder
     public Comment(Long id, String writer, String contents, Board board) {
         this.id = id;
-        this.writer = user.getEmail();
+        this.writer = writer;
         this.contents = contents;
         this.board = board;
     }
