@@ -4,7 +4,7 @@ Springboot Framework를 활용한 게시판 구현V1.4.2
 -SpringFramework를 이용한 게시판 구현 프로젝트  
 ### 일정  
  -23.11.21 ~ 23.12.03
- 
+
  -개인 프로젝트  
 - - - - - - - - -
 ### 사용 기술 및 개발 환경
@@ -18,6 +18,9 @@ Springboot Framework를 활용한 게시판 구현V1.4.2
 - - - - - - - - - - - - - -
 ### 구현 기능
 1. 글쓰기(/board/save)
+<div class="portfolio1.png">
+  <img src="/image/portfolio1.png".>
+</div>
 2. 글목록(/board/)
 3. 글조회(/board/{id})
 
