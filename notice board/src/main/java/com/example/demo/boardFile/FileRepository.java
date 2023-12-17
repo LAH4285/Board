@@ -1,6 +1,6 @@
 package com.example.demo.boardFile;
 
-import com.example.demo.board.Board;
+import com.example.demo.Board.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

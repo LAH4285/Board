@@ -32,18 +32,17 @@ public class BoardController {
 
     // CRUD Read / "paging" 템플릿을 렌더링하여 반환
     @GetMapping(value = {"/paging", "/"})
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model modal){
+    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model){
 
-        Page<BoardDTO> boardList = boardService.paging(pageable);
+        Page<BoardDTO> boards = boardService.paging(pageable);
 
         int blockLimit = 3;
-        int startPage = (int)(Math.ceil((double)pageable.getPageNumber() / blockLimit) - 1) * blockLimit + 1;
-        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? (startPage + blockLimit - 1) : boardList.getTotalPages();
+        int startPage = (int)Math.ceil((double)pageable.getPageNumber() / blockLimit - 1) * blockLimit + 1;
+        int endPage = (startPage+ blockLimit - 1) < boards.getTotalPages() ? (startPage + blockLimit -1) : boards.getTotalPages();
 
-        modal.addAttribute("boardList", boardList);
-        modal.addAttribute("startPage", startPage);
-        modal.addAttribute("endPage",endPage);
-
+        model.addAttribute("boardList", boards);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         return "paging";
     }
     // CRUD update / "update" 템플릿을 렌더링하여 반환
@@ -85,7 +84,7 @@ public class BoardController {
         boardService.save(boardDTO, files);
         System.out.println("○ 게시글 저장 ○");
 
-        return "paging";
+        return "redirect:/board/";
     }
     // CRUD delete /  "/board/paging"으로 리다이렉트
     @GetMapping("/delete/{id}")

@@ -1,8 +1,8 @@
 package com.example.demo.Comment;
 
 
+import com.example.demo.Board.Board;
 import com.example.demo.User.User;
-import com.example.demo.board.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

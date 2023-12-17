@@ -1,7 +1,6 @@
 package com.example.demo.boardFile;
 
-
-import com.example.demo.board.Board;
+import com.example.demo.Board.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

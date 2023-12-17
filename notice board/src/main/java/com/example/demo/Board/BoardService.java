@@ -1,6 +1,7 @@
 package com.example.demo.Board;
 
 import com.example.demo.boardFile.BoardFile;
+import com.example.demo.boardFile.FileDTO;
 import com.example.demo.boardFile.FileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.example.demo.Comment;
 
-import com.example.demo.board.Board;
-import com.example.demo.board.BoardRepository;
+import com.example.demo.Board.Board;
+import com.example.demo.Board.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
