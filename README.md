@@ -17,30 +17,34 @@ Springboot Framework를 활용한 게시판 구현V1.4.2
 -IDE: IntelliJ IDEA Community
 - - - - - - - - - - - - - -
 ### 구현 기능
-1. 글쓰기(/board/save)
+1. 글쓰기(/board/save)  
 <div class="portfolio1.png">
   <img src="/image/portfolio1.png".>
 </div>
-2. 글목록(/board/)
+2. 글목록(/board/)  
 <div class="portfolio2.png">
   <img src="/image/portfolio2.png".>
 </div>
-3. 글조회(/board/{id})
+3. 글조회(/board/{id})  
 <div class="portfolio3.png">
   <img src="/image/portfolio3.png".>
 </div>
 4. 글수정(/board/update/{id})  
-      -상세화면에서 수정 버튼 클릭  
-      -서버에서 해당 게시글의 정보를 가지고 수정 화면 출력  
-      -제목, 내용 수정 입력 받아서 서버로 요청
+
+-상세화면에서 수정 버튼 클릭    
+      
+ -서버에서 해당 게시글의 정보를 가지고 수정 화면 출력    
+      
+-제목, 내용 수정 입력 받아서 서버로 요청  
 <div class="portfolio4.png">
   <img src="/image/portfolio4.png".>
 </div>
 <div class="portfolio5.png">
   <img src="/image/portfolio5.png".>
 </div>
-__※ 수정 처리__    
-1. 글삭제(/board/delete/{id})
+___※ 수정 처리___   
+
+1. 글삭제(/board/delete/{id})       
 </div>
 <div class="portfolio6.png">
   <img src="/image/portfolio6.png".>
@@ -49,52 +53,58 @@ __※ 수정 처리__
 <div class="portfolio7.png">
   <img src="/image/portfolio7.png".>
 </div>
-2. 페이징처리(/board/paging)   
-  -/board/paging?page=1   
-  -/board/paging/1
-3. 게시글    
- -한페이지에 5개씩 => 2개
+2. 페이징처리(/board/paging) 
+
+  -/board/paging?page=1  
+  
+  -/board/paging/1    
+3. 게시글       
+
+ -한페이지에 5개씩 => 2개    
  <div class="portfolio8.png">
    <img src="/image/portfolio8.png".>
  </div>
  <div class="portfolio9.png">
    <img src="/image/portfolio9.png".>
 </div>   
-4. 파일(이미지)첨부하기
+4. 파일(이미지)첨부하기    
 <div class="portfolio1.png">
   <img src="/image/portfolio1.png".>
 </div>
   <div class="portfolio3.png">
     <img src="/image/portfolio3.png".>
 </div>
-5. 단일 파일 첨부
+5. 단일 파일 첨부    
 <div class="portfolio1.png">
   <img src="/image/portfolio1.png".>
 </div>
-6. 다중 파일 첨부
+6. 다중 파일 첨부    
 <div class="portfolio7.png">
   <img src="/image/portfolio7.png".>
 </div>
 
-__※ 댓글__
- 1. 댓글작성  
-  -글 조회 기능에 댓글 작성 구현
+__※ 댓글__    
+ 1. 댓글작성      
+  
+  -글 조회 기능에 댓글 작성 구현    
   <div class="portfolio10.png">
     <img src="/image/portfolio10.png".>
   </div>
   <div class="portfolio11.png">
     <img src="/image/portfolio11.png".>
   </div>
- 2. 댓글 수정 및 삭제  
+ 2. 댓글 수정 및 삭제
+ 
 -작성된 댓글 수정 및 삭제 기능 구현(hidden)
--수정
+
+-수정    
 <div class="portfolio12.png">
   <img src="/image/portfolio12.png".>
 </div>
 <div class="portfolio13.png">
   <img src="/image/portfolio13.png".>
 </div>
--삭제
+-삭제    
 <div class="portfolio14.png">
   <img src="/image/portfolio14.png".>
 </div>
