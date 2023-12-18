@@ -1,5 +1,6 @@
 package com.example.demo.User;
 
+import com.example.demo.Board.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,9 @@ public class User {
     @Column(length = 30)
     @Convert(converter = StringArrayConverter.class)
     private List<String> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Board> boards = new ArrayList<>();
 
     @Builder
     public User(Long id, String email, String password, String userName, List<String> roles) {

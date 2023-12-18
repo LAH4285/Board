@@ -56,13 +56,14 @@ public class Board {
 
 
     @Builder
-    public Board(Long id, String writer, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Board(Long id, String writer, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime, User user) {
         this.id = id;
         this.writer = writer;
         this.title = title;
         this.contents = contents;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.user = user;
     }
 
     public void updateFromDTO(BoardDTO boardDTO){
